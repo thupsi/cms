@@ -77,10 +77,6 @@ const targetAttributes = [
   'aria-activedescendant',
   'aria-busy',
 ] as const;
-const popoverConfig = {
-  handlesAccessibility: false,
-  visibilityTriggerFunction: undefined,
-};
 // How long an announcement stays in the live region before it's cleared out
 const announcementTimeout = 5000;
 
@@ -188,7 +184,8 @@ export default class CraftTextExpander extends LitElement {
     return html`
       <craft-popover
         exportparts="popup"
-        .config=${popoverConfig}
+        without-invoker-aria
+        manual
         @craft-show=${this.#stopPopoverEvent}
         @craft-hide=${this.#onPopoverHide}
         @craft-after-show=${this.#stopPopoverEvent}
@@ -735,7 +732,7 @@ export default class CraftTextExpander extends LitElement {
     this.#inputRange.setStartOffset(position);
     this.#inputRange.setEndOffset(position);
     this.#caretRect = this.#inputRange.getBoundingClientRect();
-    this.popoverElement.repositionOverlay();
+    this.popoverElement.reposition();
     return true;
   }
 
